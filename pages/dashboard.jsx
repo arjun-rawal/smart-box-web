@@ -1,70 +1,98 @@
-import Head from 'next/head'
+import  {PlainList} from 'flatlist-react'
+import React,{useState} from 'react';
 
-export default function Home() {
+export default function Dashboard() {
+  const [tasks, setTasks] = useState([]);
+  let dict = {};
+
+  function addItem(){
+    var taskName = prompt("Enter Task Name: ");
+    var taskDetails = prompt("Enter details/description");
+    dict[taskName] = taskDetails;
+    setTasks(tasks.concat(taskName+"😎"+dict[taskName]));
+  }
+
+  function renderTask(item){
+    var split = item.split('😎');
+    return(
+      <a className="card" style={{margin:"0.2rem","flex-basis": "auto",padding:" 1rem",
+        "text-align": "center","border": "1px solid #eaeaea","border-radius": "10px",}}>
+      <h3>{split[0]}</h3><p>{split[1]}</p>
+      <img src="https://static.thenounproject.com/png/1416596-200.png" width="20rem" height="20rem"/>
+      <img src="https://i.pinimg.com/474x/c7/c1/bd/c7c1bd17a0e462b5cd6f46815f37abcd.jpg" width="20rem" height="20rem"/>
+      </a>
+    );
+  }
+  function ble() {
+    navigator.bluetooth
+      .requestDevice({
+        acceptAllDevices: true,
+        optionalServices: ["9f5cd3d8-1735-4301-80af-b0c41c4aac5e"], // Required to access service later.
+      })
+      .then((device) => {
+        return device.gatt.connect();
+      })
+      .then((server) => {
+        return server.getPrimaryService("9f5cd3d8-1735-4301-80af-b0c41c4aac5e");
+      })
+      .then((service) => {
+        return service.getCharacteristic(
+          "b0956118-a560-47d8-8a99-ea714782bd37"
+        );
+      })
+      .then((characteristic) => {
+        x = characteristic;
+        return lockBlue();
+
+        // characteristic.writeValue(Uint8Array.of(1));
+      })
+      .catch((error) => {
+        setTexts("" + error);
+      });
+  }
+  function lockBlue() {
+    x.writeValue(Uint8Array.of(1));
+  }
+  const [testing, setTexts] = useState("Pair with Smart Box in the bluetooth");
+
+  function classroomSync(){
+
+  }
+
+
+
   return (
     <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
+        <h1>Dashboard</h1>
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a onClick={() => ble()} className="card">
+            <h3>Connect to Smart Box &rarr;</h3>
+            <p>{testing}</p>
           </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a onClick={() => classroomSync()} className="card">
+            <h3>Sync Google Classroom &rarr;</h3>
+            <p>Retrieve assignments from Google Classroom</p>
           </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          <a onClick={() => addItem()} className="card">
+            <h3>Add Task &rarr;</h3>
+            <p>Custom Task</p>
           </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          
         </div>
+      
+        <PlainList
+        list={tasks}
+        renderItem={(item) => (renderTask(item))}
+        />
       </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className="logo" />
-        </a>
-      </footer>
 
       <style jsx>{`
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           justify-content: center;
           align-items: center;
         }
@@ -189,7 +217,6 @@ export default function Home() {
           }
         }
       `}</style>
-
       <style jsx global>{`
         html,
         body {
@@ -205,5 +232,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
