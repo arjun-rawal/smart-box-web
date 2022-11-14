@@ -1,3 +1,3 @@
 export default function Instructions() {
-    return <h1>Instructions</h1>;
-  }
+  return <h1>Instructions</h1>;
+}

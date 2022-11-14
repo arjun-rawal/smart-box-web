@@ -1,30 +1,17 @@
-import Head from 'next/head'
-import React, {useState} from 'react';
+import Head from "next/head";
+import React, { useState } from "react";
 export default function Home() {
-  
-
-
-
-
   return (
-    
     <div className="container">
       <Head>
         <title>SmartBox</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-   
-
-
 
       <main>
-        <h1 className="title">
-         Smart Box
-        </h1>
+        <h1 className="title">Smart Box</h1>
 
-        <p className="description">
-          Increasing Productivity
-        </p>
+        <p className="description">Increasing Productivity</p>
 
         <div className="grid">
           <a href="/dashboard" className="card">
@@ -36,21 +23,13 @@ export default function Home() {
             <h3>Instructions &rarr;</h3>
             <p>Click here if this is your first time using a Smart Box!</p>
           </a>
-
-
-
-
-
         </div>
       </main>
 
-      <footer>
-        Created by Arjun Rawal, Srihith Tirnati, and Jai Yalla
-      </footer>
+      <footer>Created by Arjun Rawal, Srihith Tirnati, and Jai Yalla</footer>
 
       <style jsx>{`
         .container {
-
           min-height: 100vh;
           padding: 0 0.5rem;
           display: flex;
@@ -66,7 +45,6 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-
         }
 
         footer {
@@ -196,5 +174,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }

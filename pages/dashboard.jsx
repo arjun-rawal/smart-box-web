@@ -1,25 +1,43 @@
-import  {PlainList} from 'flatlist-react'
-import React,{useState} from 'react';
+import { PlainList } from "flatlist-react";
+import React, { useState } from "react";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   let dict = {};
 
-  function addItem(){
+  function addItem() {
     var taskName = prompt("Enter Task Name: ");
     var taskDetails = prompt("Enter details/description");
     dict[taskName] = taskDetails;
-    setTasks(tasks.concat(taskName+"😎"+dict[taskName]));
+    setTasks(tasks.concat(taskName + "😎" + dict[taskName]));
   }
 
-  function renderTask(item){
-    var split = item.split('😎');
-    return(
-      <a className="card" style={{margin:"0.2rem","flex-basis": "auto",padding:" 1rem",
-        "text-align": "center","border": "1px solid #eaeaea","border-radius": "10px",}}>
-      <h3>{split[0]}</h3><p>{split[1]}</p>
-      <img src="https://static.thenounproject.com/png/1416596-200.png" width="20rem" height="20rem"/>
-      <img src="https://i.pinimg.com/474x/c7/c1/bd/c7c1bd17a0e462b5cd6f46815f37abcd.jpg" width="20rem" height="20rem"/>
+  function renderTask(item) {
+    var split = item.split("😎");
+    return (
+      <a
+        className="card"
+        style={{
+          margin: "0.2rem",
+          "flex-basis": "auto",
+          padding: " 1rem",
+          "text-align": "center",
+          border: "1px solid #eaeaea",
+          "border-radius": "10px",
+        }}
+      >
+        <h3>{split[0]}</h3>
+        <p>{split[1]}</p>
+        <img
+          src="https://static.thenounproject.com/png/1416596-200.png"
+          width="20rem"
+          height="20rem"
+        />
+        <img
+          src="https://i.pinimg.com/474x/c7/c1/bd/c7c1bd17a0e462b5cd6f46815f37abcd.jpg"
+          width="20rem"
+          height="20rem"
+        />
       </a>
     );
   }
@@ -55,11 +73,7 @@ export default function Dashboard() {
   }
   const [testing, setTexts] = useState("Pair with Smart Box in the bluetooth");
 
-  function classroomSync(){
-
-  }
-
-
+  function classroomSync() {}
 
   return (
     <div className="container">
@@ -78,13 +92,9 @@ export default function Dashboard() {
             <h3>Add Task &rarr;</h3>
             <p>Custom Task</p>
           </a>
-          
         </div>
-      
-        <PlainList
-        list={tasks}
-        renderItem={(item) => (renderTask(item))}
-        />
+
+        <PlainList list={tasks} renderItem={(item) => renderTask(item)} />
       </main>
 
       <style jsx>{`
