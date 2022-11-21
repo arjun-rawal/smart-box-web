@@ -1,6 +1,23 @@
 import Head from "next/head";
 import React, { useState } from "react";
-export default function Home() {
+import { Amplify } from 'aws-amplify';
+
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+
+import awsExports from './aws-exports';
+Amplify.configure(awsExports);
+
+import { Auth } from 'aws-amplify';
+
+async function signOut() {
+    try {
+        await Auth.signOut();
+    } catch (error) {
+        console.log('error signing out: ', error);
+    }
+}
+function Home() {
   return (
     <div className="container">
       <Head>
@@ -12,7 +29,9 @@ export default function Home() {
         <h1 className="title">Smart Box</h1>
 
         <p className="description">Increasing Productivity</p>
-
+        <div className="login1" style={{position:'absolute',top:10,right:10}}>
+          <button onClick={() => signOut()} className="button3">Log Out</button>
+        </div>
         <div className="grid">
           <a href="/dashboard" className="card">
             <h3>Dashboard &rarr;</h3>
@@ -29,6 +48,21 @@ export default function Home() {
       <footer>Created by Arjun Rawal, Srihith Tirnati, and Jai Yalla</footer>
 
       <style jsx>{`
+        .button3 {
+          font-weight: bold;
+          font-size: 25px;
+          cursor: pointer;
+          background-color: white; 
+          color: black; 
+          border: 2px solid black;
+          text-decoration:none; 
+        }
+
+        .button3:hover{
+          text-decoration:underline #3366CC;
+        }
+
+
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -176,3 +210,5 @@ export default function Home() {
     </div>
   );
 }
+export default withAuthenticator(Home);
+

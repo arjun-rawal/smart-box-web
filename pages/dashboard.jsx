@@ -80,21 +80,16 @@ export default function Dashboard() {
       <main>
         <h1>Dashboard</h1>
         <div className="grid">
-          <a onClick={() => ble()} className="card">
-            <h3>Connect to Smart Box &rarr;</h3>
-            <p>{testing}</p>
+          <a className="card">
+            <h3>Start a Productivity Session&rarr;</h3>
+            <p>Connect to Smart Box, add tasks, and more</p>
           </a>
-          <a onClick={() => classroomSync()} className="card">
-            <h3>Sync Google Classroom &rarr;</h3>
-            <p>Retrieve assignments from Google Classroom</p>
-          </a>
-          <a onClick={() => addItem()} className="card">
-            <h3>Add Task &rarr;</h3>
-            <p>Custom Task</p>
+          <a className="card">
+            <h3>View Previous Productivity Sessions&rarr;</h3>
           </a>
         </div>
 
-        <PlainList list={tasks} renderItem={(item) => renderTask(item)} />
+        {/* <PlainList list={tasks} renderItem={(item) => renderTask(item)} /> */}
       </main>
 
       <style jsx>{`

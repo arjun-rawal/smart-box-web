@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^4.0.1",
+    "aws-amplify": "^5.0.3",
     "flatlist-react": "^1.5.3",
     "next": "latest",
     "react": "18.2.0",
