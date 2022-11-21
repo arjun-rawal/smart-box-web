@@ -80,7 +80,7 @@ export default function Dashboard() {
       <main>
         <h1>Dashboard</h1>
         <div className="grid">
-          <a className="card">
+          <a href="/newSession"className="card">
             <h3>Start a Productivity Session&rarr;</h3>
             <p>Connect to Smart Box, add tasks, and more</p>
           </a>
