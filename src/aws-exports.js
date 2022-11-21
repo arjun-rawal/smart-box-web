@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://smart-box.vercel.app",
-        "redirectSignOut": "https://smart-box.vercel.app",
+        "redirectSignIn": "https://smart-box.vercel.app,http://localhost:3000",
+        "redirectSignOut": "https://smart-box.vercel.app,http://localhost:3000",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
