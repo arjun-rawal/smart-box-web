@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 
+
+
 function ble() {
+
     navigator.bluetooth
       .requestDevice({
-        acceptAllDevices: true,
+        filters: [{
+          name: 'Smart Box'
+        }],      
         optionalServices: ["9f5cd3d8-1735-4301-80af-b0c41c4aac5e"], // Required to access service later.
       })
       .then((device) => {
@@ -18,7 +23,7 @@ function ble() {
         );
       })
       .then((characteristic) => {
-
+        setBleColor("green");
         // characteristic.writeValue(Uint8Array.of(1));
       })
       .catch((error) => {
@@ -26,6 +31,40 @@ function ble() {
     });
   }
 export default function newSession() {
+  function ble() {
+
+    navigator.bluetooth
+      .requestDevice({
+        filters: [{
+          name: 'Smart Box'
+        }],      
+        optionalServices: ["9f5cd3d8-1735-4301-80af-b0c41c4aac5e"], // Required to access service later.
+      })
+      .then((device) => {
+        return device.gatt.connect();
+      })
+      .then((server) => {
+        return server.getPrimaryService("9f5cd3d8-1735-4301-80af-b0c41c4aac5e");
+      })
+      .then((service) => {
+        return service.getCharacteristic(
+          "b0956118-a560-47d8-8a99-ea714782bd37"
+        );
+      })
+      .then((characteristic) => {
+        setBleColor("lightgreen");
+        // characteristic.writeValue(Uint8Array.of(1));
+      })
+      .catch((error) => {
+        setBleColor('lightred');
+    });
+  }
+    //card colors
+    const [bleColor, setBleColor] = useState("white");
+    const [taskColor, setTaskColor] = useState("white");
+    const [classColor, setClassColor] = useState("white");
+    const [minTimeColor, setMinTimeColor] = useState("white");
+    const [subButColor,setSubButColor]=useState("white");
     return (
 
     <div className="container">
@@ -33,7 +72,7 @@ export default function newSession() {
             <h1 style={{textAlign:'center'}}className="title">New Session</h1>
         <div style={{display:'flex',flexDirection:'row'}}>
             <div style={{display:'flex',flexDirection:'column'}} className="grid">
-                <a onClick={() => ble()} className="card">
+                <a onClick={() => ble()}  style={{backgroundColor:bleColor}}className="card">
                     <div className="container1">
                         <h4><b>Connect to Smart Box</b></h4>
                         <p>Select Smart-Box in the Bluetooth pop-up</p>
@@ -61,7 +100,7 @@ export default function newSession() {
                     </div>
                 </div>
                 <div style={{paddingLeft:'12.5%',paddingTop:'10%'}}>
-                    <button style={{width:'25%',backgroundColor:'lightgreen'}}>Next</button>
+                    <button style={{width:'25%',backgroundColor:subButColor}}>Next</button>
                 </div>
             </div>
 
@@ -80,6 +119,7 @@ export default function newSession() {
             width:50%;
             text-align:center;
             align-items:center;
+            cursor:pointer;
             justify-content:center;
             height:50%;
             }
