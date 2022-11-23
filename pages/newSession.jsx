@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import  {PlainList} from 'flatlist-react'
 
 
 
@@ -65,10 +66,39 @@ export default function newSession() {
     const [classColor, setClassColor] = useState("white");
     const [minTimeColor, setMinTimeColor] = useState("white");
     const [subButColor,setSubButColor]=useState("white");
-    return (
 
-    <div className="container">
-            <main>
+
+    const [tasks, setTasks] = useState([]);
+    let dict = {};
+    function renderTask(item){
+      var split = item.split('😎');
+        return(
+          <a className="card" style={{margin:"0.2rem","flex-basis": "auto",padding:" 1rem",
+            "text-align": "center","border": "1px solid #eaeaea","border-radius": "10px",}}>
+          <h3>{split[0]}</h3><p>{split[1]}</p>
+          <img src="https://static.thenounproject.com/png/1416596-200.png" width="20rem" height="20rem"/>
+          <img src="https://i.pinimg.com/474x/c7/c1/bd/c7c1bd17a0e462b5cd6f46815f37abcd.jpg" width="20rem" height="20rem"/>
+          </a>
+     );
+    }
+    function addItem(){
+      var taskName = prompt("Enter Task Name: ");
+      var taskDetails = prompt("Enter details/description");
+      dict[taskName] = taskDetails;
+      setTasks(tasks.concat(taskName+"😎"+dict[taskName]));
+    }
+
+    return (
+      
+    <div>
+      <div style={{position:'absolute'}} className="tasks">
+           <PlainList
+                list={tasks}
+                renderItem={(item) => 
+                (renderTask(item))}
+            />
+      </div>
+            <main className="container">
             <h1 style={{textAlign:'center'}}className="title">New Session</h1>
         <div style={{display:'flex',flexDirection:'row'}}>
             <div style={{display:'flex',flexDirection:'column'}} className="grid">
@@ -79,12 +109,12 @@ export default function newSession() {
                     </div>
                 </a>
                 <p style={{fontSize:30,paddingLeft:'23%'}}>&#8595;</p>
-                <div className="card">
+                <a onClick={()=> addItem()} className="card">
                     <div className="container1">
                         <h4><b>Add Tasks</b></h4>
                         <p>Add everything you want to complete in this session</p>
                     </div>
-                </div>
+                </a>
                 <p style={{fontSize:30,paddingLeft:'23%'}}>&#8595;</p>
                 <div className="card">
                     <div className="container1">
