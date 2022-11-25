@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import  {PlainList} from 'flatlist-react'
-
+import Draggable from 'react-draggable';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 
 function ble() {
@@ -10,7 +11,7 @@ function ble() {
         filters: [{
           name: 'Smart Box'
         }],      
-        optionalServices: ["9f5cd3d8-1735-4301-80af-b0c41c4aac5e"], // Required to access service later.
+        optionalServices: ["9f5cd3d8-1735-4301-80af-b0c41c4aac5e"], 
       })
       .then((device) => {
         return device.gatt.connect();
@@ -69,35 +70,69 @@ export default function newSession() {
 
 
     const [tasks, setTasks] = useState([]);
-    let dict = {};
+
+    const [newTaskSubButColor,setNewTaskSubButColor]= useState("lightgrey");
+    const [newTaskSubButText, setNewTaskSubButText] = useState("Submit")
+
+    const listItems = tasks.map((task) =>      
+    <Draggable><div style={{paddingLeft:"30px", paddingRight:'30px',paddingTop:'10px',paddingBottom:'10px',"text-align": "left","border": "1px solid lightblue","border-radius": "20px"}}>{renderTask(task)} </div></Draggable>
+    );
     function renderTask(item){
       var split = item.split('😎');
         return(
-          <a className="card" style={{margin:"0.2rem","flex-basis": "auto",padding:" 1rem",
-            "text-align": "center","border": "1px solid #eaeaea","border-radius": "10px",}}>
-          <h3>{split[0]}</h3><p>{split[1]}</p>
-          <img src="https://static.thenounproject.com/png/1416596-200.png" width="20rem" height="20rem"/>
-          <img src="https://i.pinimg.com/474x/c7/c1/bd/c7c1bd17a0e462b5cd6f46815f37abcd.jpg" width="20rem" height="20rem"/>
-          </a>
+          <div>
+
+          <h4><b>{split[0]}</b></h4>
+          <p>{split[1]}</p>
+
+          </div>
      );
     }
-    function addItem(){
-      var taskName = prompt("Enter Task Name: ");
-      var taskDetails = prompt("Enter details/description");
-      dict[taskName] = taskDetails;
-      setTasks(tasks.concat(taskName+"😎"+dict[taskName]));
+    function addTask(){
+      if (taskName.length==0){
+        setNewTaskSubButColor("red");
+        setNewTaskSubButText("Enter Task Name!")
+      }
+      else if (taskName.length>25){
+        setNewTaskSubButColor("red");
+        setNewTaskSubButText("Max 25 Name Characters!")
+      } 
+      else if (taskDetails.length>100){
+        setNewTaskSubButColor("red");
+        setNewTaskSubButText("Max 100 Details Characters!")
+      }
+    
+      else{
+        setTasks(tasks.concat(taskName+"😎"+taskDetails));
+        setTaskName("");
+        setTaskDetails("");
+        setNewTaskSubButColor("grey")
+        setTaskColor("lightgreen")
+      }
     }
+    
+    const [taskName, setTaskName] = useState('');
+    const [taskDetails, setTaskDetails] = useState('');
+      const handleTaskNameChange = event => {
+        setTaskName(event.target.value);
+        console.log("taskName:"+ event.target.value)
+      };
+
+      const handleTaskDetailsChange = event => {
+        setTaskDetails(event.target.value);
+        console.log("taskDetails:" + taskDetails);
+      };
+
+    
 
     return (
       
     <div>
-      <div style={{position:'absolute'}} className="tasks">
-           <PlainList
-                list={tasks}
-                renderItem={(item) => 
-                (renderTask(item))}
-            />
+
+      <div style={{position:'absolute'}}>
+          {listItems}
       </div>
+
             <main className="container">
             <h1 style={{textAlign:'center'}}className="title">New Session</h1>
         <div style={{display:'flex',flexDirection:'row'}}>
@@ -109,12 +144,25 @@ export default function newSession() {
                     </div>
                 </a>
                 <p style={{fontSize:30,paddingLeft:'23%'}}>&#8595;</p>
-                <a onClick={()=> addItem()} className="card">
-                    <div className="container1">
-                        <h4><b>Add Tasks</b></h4>
-                        <p>Add everything you want to complete in this session</p>
-                    </div>
-                </a>
+
+                <Popup trigger={<a className="card" style={{backgroundColor:taskColor}}> 
+                                <div className="container1">
+                                <h4><b>Add Tasks</b></h4>
+                                <p>Add everything you want to complete in this session</p>
+                                </div>
+                                </a>} 
+                        position="right center">
+                          
+                          <div> 
+                            <label>Task Name</label>
+                            <input type="text" name="taskName" id="taskName" onChange={handleTaskNameChange} value={taskName}></input>
+                            <label>Task Details </label>
+                            <input type="text" name="taskDetails" id="taskDetails" onChange={handleTaskDetailsChange} value={taskDetails}></input>
+                            <button style={{backgroundColor:newTaskSubButColor}} onClick={addTask}>{newTaskSubButText}</button>
+                          </div>
+                          
+                </Popup>
+
                 <p style={{fontSize:30,paddingLeft:'23%'}}>&#8595;</p>
                 <div className="card">
                     <div className="container1">
@@ -143,6 +191,7 @@ export default function newSession() {
             .grid{
                 padding-left:43%
             }
+
             .card {
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
@@ -156,6 +205,17 @@ export default function newSession() {
 
             .card:hover {
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+            .taskCard {
+              box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+              transition: 0.3s;
+              width:50%;
+              text-align:center;
+              align-items:center;
+              cursor:pointer;
+              justify-content:center;
+              height:50%;
             }
 
             .container1 {

@@ -1,5 +1,6 @@
 import { PlainList } from "flatlist-react";
 import React, { useState } from "react";
+import '@aws-amplify/ui-react/styles.css';
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);

@@ -1,10 +1,8 @@
 import Head from "next/head";
 import React, { useState } from "react";
 import { Amplify } from 'aws-amplify';
-
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-
 import awsExports from '../src/aws-exports';
 Amplify.configure(awsExports);
 
@@ -17,7 +15,10 @@ async function signOut() {
         console.log('error signing out: ', error);
     }
 }
-function Home() {
+
+function Home(user) {
+
+  
   return (
     <div className="container">
       <Head>
@@ -26,8 +27,7 @@ function Home() {
       </Head>
 
       <main>
-        <h1 className="title">Smart Box</h1>
-
+        <h1 className="title">Smart Box, {user.Email}</h1>
         <p className="description">Increasing Productivity</p>
         <div className="login1" style={{position:'absolute',top:10,right:10}}>
           <button onClick={() => signOut()} className="button3">Log Out</button>
