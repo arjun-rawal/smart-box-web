@@ -73,9 +73,8 @@ export default function newSession() {
 
     const [newTaskSubButColor,setNewTaskSubButColor]= useState("lightgrey");
     const [newTaskSubButText, setNewTaskSubButText] = useState("Submit")
-
     const listItems = tasks.map((task) =>      
-    <Draggable><div style={{paddingLeft:"30px", paddingRight:'30px',paddingTop:'10px',paddingBottom:'10px',"text-align": "left","border": "1px solid lightblue","border-radius": "20px"}}>{renderTask(task)} </div></Draggable>
+    <Draggable bounds={{left: 0, top: 0,}}><div style={{paddingLeft:"30px", paddingRight:'30px',paddingTop:'10px',paddingBottom:'10px',"text-align": "left","border": "1px solid lightblue","border-radius": "20px"}}>{renderTask(task)} </div></Draggable>
     );
     function renderTask(item){
       var split = item.split('😎');
